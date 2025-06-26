@@ -23,19 +23,21 @@ var bufferPool = sync.Pool{
 	},
 }
 
-func io_test(t *testing.T) {
-	buf := bufferPool.Get().(*bytes.Buffer)
-	buf.Reset()
-	buf.WriteString("Hello, pooled world!")
-	fmt.Println(buf.String())
-	bufferPool.Put(buf) 
+func BenchmarkIO(b *testing.B) {
+	for b.Loop() {
+		buf := bufferPool.Get().(*bytes.Buffer)
+		buf.Reset()
+		buf.WriteString("Hello, pooled world!")
+		fmt.Println(buf.String())
+		bufferPool.Put(buf)
+	}
 }
 
-func obj_test(t *testing.T) {
-	for range 1000000 {
-		obj := dataPool.Get().(*Data) 		
-		obj.Value = 42                
-		dataPool.Put(obj)             
+func BenchmarkObj(b *testing.B) {
+	for b.Loop() {
+		obj := dataPool.Get().(*Data)
+		obj.Value = 42
+		dataPool.Put(obj)
 	}
 	fmt.Println("Done")
 }
