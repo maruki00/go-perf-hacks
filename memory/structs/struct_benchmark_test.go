@@ -8,7 +8,7 @@ import (
 
 func BenchmarkBadStruct(b *testing.B){
 	for b.Loop(){
-	items := make([]BadStruct, 1_000_000)
+	items := make([]BadStruct, 100_000_000)
 		for i,j := range items {
 			j.Age = (i*1_000_000)% math.MaxInt
 		}
@@ -19,7 +19,7 @@ func BenchmarkBadStruct(b *testing.B){
 
 func BenchmarkGoodStruct(b *testing.B){
 	for b.Loop(){
-	items := make([]GoodStruct, 1_000_000)
+	items := make([]GoodStruct, 100_000_000)
 		for i,j := range items {
 			j.Age = (i*1_000_000)% math.MaxInt
 		}
